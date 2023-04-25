@@ -1,8 +1,10 @@
 import { DrawerContentComponentProps, DrawerContentScrollView, createDrawerNavigator } from '@react-navigation/drawer';
-import { StackNavigator } from './StackNavigator';
 import SettingsScreen from '../screens/SettingsScreen';
 import { Image, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
-import { styles } from '../theme/appTheme';
+import { styles, colores } from '../theme/appTheme';
+import { Tabs } from './Tabs';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { DrawerActions } from '@react-navigation/native';
 
 
 
@@ -15,12 +17,23 @@ export const MenuLateral = () => {
     const { width } = useWindowDimensions()
   return (
     <Drawer.Navigator
-    screenOptions={{
+    screenOptions={({ navigation }) => ({
       drawerType: width >= 768 ? 'permanent' : 'front',
-    }}
-    drawerContent={ (props) => <MenuInterno {...props} />}
-    >
-      <Drawer.Screen name="StackNavigator"  component={ StackNavigator } />
+      headerLeft: ()=>(
+        <TouchableOpacity
+        style={{
+          marginLeft: 10
+        }}
+        onPress={ ()=> navigation.dispatch(DrawerActions.toggleDrawer())}
+        >
+          <Icon name="grid-outline" size={30} color={colores.primary} />
+
+        </TouchableOpacity>
+      )
+    })}
+    
+    drawerContent={ (props) => <MenuInterno {...props} />}>
+      <Drawer.Screen name="Tabs"  component={ Tabs } />
       <Drawer.Screen name="SettingsScreen"  component={ SettingsScreen } />
     </Drawer.Navigator>
   );
@@ -39,18 +52,23 @@ const MenuInterno = ( {navigation}: DrawerContentComponentProps) => {
       </View>
       {/* Opciones de menú */}
       <View style={ styles.menuContainer}>
-
-        <TouchableOpacity style={styles.menuBoton}
-        onPress={ () => navigation.navigate('StackNavigator')}
-        >
-          <Text style={ styles.menuTexto}>Navegacion</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.menuBoton}
-        onPress={ () => navigation.navigate('SettingsScreen')}
-        >
-          <Text style={ styles.menuTexto}>Ajustes</Text>
-        </TouchableOpacity>
-
+        <View style={{ flexDirection: 'row'}}>
+          <Icon name="at-circle-outline" size={40} color='lightblue' /> 
+          
+          <TouchableOpacity style={styles.menuBoton}
+          onPress={ () => navigation.navigate('Tabs')}
+          >
+            <Text style={ styles.menuTexto}>Navegacion</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{ flexDirection: 'row'}}>
+          <Icon name="bulb-outline" size={40} color='pink' /> 
+          <TouchableOpacity style={styles.menuBoton}
+          onPress={ () => navigation.navigate('SettingsScreen')}
+          >
+            <Text style={ styles.menuTexto}>Ajustes</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
     </DrawerContentScrollView>
