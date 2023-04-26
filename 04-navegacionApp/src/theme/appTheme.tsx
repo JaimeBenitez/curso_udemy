@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
     },
     botonGrande: {
         width: 100,
-        height: 100,
+        height: 120,
         backgroundColor: "red",
         borderRadius: 20,
         alignItems: 'center',
@@ -46,4 +46,5 @@ export const styles = StyleSheet.create({
     menuTexto: {
         fontSize: 20,
     }
+
 })

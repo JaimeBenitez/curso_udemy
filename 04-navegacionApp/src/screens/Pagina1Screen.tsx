@@ -28,6 +28,7 @@ const Pagina1Screen = ( { navigation }: Props ) => {
         onPress={()=> navigation.navigate('PersonaScreen', { id:1 , nombre: 'Pedro'})}
         >
           <Icon name="basketball-outline" size={80} color='orange' /> 
+          <Text style={{ ...styles.menuTexto, color: '#FF9427'}}>Pedro</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -35,6 +36,7 @@ const Pagina1Screen = ( { navigation }: Props ) => {
         onPress={()=> navigation.navigate('PersonaScreen', { id:2 , nombre: 'María'})}
         >
            <Icon name="camera-outline" size={80} color='purple' /> 
+           <Text style={{ ...styles.menuTexto, color: '#5856D6'}}>Maria</Text>
         </TouchableOpacity>
       </View>
 
