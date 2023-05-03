@@ -17,15 +17,15 @@ const PersonaScreen = ( { route, navigation }: Props ) => {
 
     // const params = route.params as RouterParams
     const { changeUsername } = useContext( AuthContext)
-
-    const params = route.params 
+    const params = route.params
+    const { nombre } = params 
 
     useEffect(()=>{
         navigation.setOptions({
-            title: params.nombre 
+            title: nombre 
         })
-        changeUsername(params.nombre)
-    }, [])
+        changeUsername(nombre)
+    }, [nombre])
 
     /* useEffect(()=>{
      changeUsername(params.nombre)
