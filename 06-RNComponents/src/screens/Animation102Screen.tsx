@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Animated, StyleSheet, View } from 'react-native';
 import useAnimation from '../hooks/useAnimation';
+import { ThemeContext } from '../context/themeContext/ThemeContext';
 
 const Animation102Screen = () => {
 
   const {pan, panResponder} = useAnimation()
+  const { theme: {colors} } = useContext(ThemeContext)
 
   return (
     <View style={{...styles.container, flex: 1}}>
-       <Animated.View {...panResponder.panHandlers }style={[pan.getLayout(), styles.blueBox]} />
+       <Animated.View {...panResponder.panHandlers }style={[pan.getLayout(), {...styles.blueBox, backgroundColor: colors.primary},]} />
     </View>
   )
 }
@@ -23,7 +25,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     blueBox: {
-        backgroundColor: '#75CED8',
         width: 150,
         height: 150,
 
