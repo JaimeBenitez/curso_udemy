@@ -26,7 +26,7 @@ const PokemonDetails = ({pokemon}: Props) => {
             </View>
 
             {/* Peso  */}
-            <Text style={ styles.title }>Peso</Text>
+            <Text style={ styles.title }>Weight</Text>
             <Text style={ styles.regularText }>{pokemon.weight} lb</Text>
 
         </View>
@@ -85,7 +85,7 @@ const PokemonDetails = ({pokemon}: Props) => {
             </View>
             {/* Sprite final */}
             <View style={{
-                marginBottom: 20,
+                marginBottom: 60,
                 alignItems: 'center',
             }}>
                 <FadeInImage uri={pokemon.sprites.front_default} style={ styles.basicSprite } />
