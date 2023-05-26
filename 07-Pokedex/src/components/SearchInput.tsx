@@ -18,7 +18,6 @@ const SearchInput = ({ style, onDebounce }: Props) => {
     onDebounce(debouncedValue)
   }, [debouncedValue])
 
-  console.log(textValue)
   return (
     <View style={{...styles.container, ...style as any }}>
       <View style={styles.textBackground}>
