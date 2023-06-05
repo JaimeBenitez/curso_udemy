@@ -1,10 +1,12 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Dimensions, View } from 'react-native'
+import Map from '../components/Map'
 
 const MapScreen = () => {
+  const { height } = Dimensions.get('window')
   return (
-    <View>
-      <Text>Map Screen</Text>
+    <View style={{ flex: 1 }}>
+      <Map />
     </View>
   )
 }
