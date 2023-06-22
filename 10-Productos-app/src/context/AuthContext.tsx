@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }: any) => {
         dispatch({ type: 'singUp', payload: { token: data.token, user: data.usuario } })
         await AsyncStorage.setItem('token', data.token)
         } catch (error: any){
-            dispatch({ type: 'addError', payload: error.response.data.msg || 'El correo esta ya registrado' })
+            dispatch({ type: 'addError', payload: error.response.data.msg || 'Revise la información' })
         }
     };
     const logOut = async() => {
