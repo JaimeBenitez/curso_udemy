@@ -15,7 +15,7 @@ const ProductsNavigator = () => {
     <Stack.Navigator
         screenOptions={{
             cardStyle: {
-                backgroundColor: 'lightblue'
+                backgroundColor: 'white'
             },
             headerStyle: {
                 elevation: 0,

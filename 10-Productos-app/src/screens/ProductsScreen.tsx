@@ -6,6 +6,7 @@ import { ProductsStackParams } from '../navigator/ProductsNavigator';
 
 
 
+
 interface Props extends StackScreenProps<ProductsStackParams, 'ProductsScreen'>{};
 
 const ProductsScreen = ({ navigation }: Props) => {
@@ -55,7 +56,8 @@ export default ProductsScreen
 
 const styles = StyleSheet.create({
   productName: {
-    fontSize: 20
+    fontSize: 20,
+    color: 'black'
   },
   itemSeparator: {
     borderBottomWidth: 2,

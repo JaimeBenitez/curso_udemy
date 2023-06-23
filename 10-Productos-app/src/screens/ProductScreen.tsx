@@ -1,11 +1,13 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Image, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { ProductsStackParams } from '../navigator/ProductsNavigator';
 import {Picker} from '@react-native-picker/picker';
 import useCategories from '../hooks/useCategories';
 import { useForm } from '../hooks/useForm';
 import { productsContext } from '../context/ProductsContext';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+
 
 
 interface Props extends StackScreenProps<ProductsStackParams, 'ProductScreen'>{};
@@ -14,9 +16,11 @@ const ProductScreen = ({ navigation, route}: Props) => {
   
   const { id = '', name = '' } = route.params
 
+  const [ tempUri, setTempUri ] = useState<string>()
+
   const { categories } = useCategories()
 
-  const { loadProductById, addProducts, updateProducts } = useContext( productsContext )
+  const { loadProductById, addProducts, updateProducts, uploadImage } = useContext( productsContext )
 
   const { _id, categoriaId, nombre, img, form, onChange, setFormValue } = useForm({
     _id: id,
@@ -56,6 +60,32 @@ const ProductScreen = ({ navigation, route}: Props) => {
 
     }
   }
+  
+  const takePhoto = () => {
+      launchCamera({
+        mediaType: 'photo',
+        quality: 0.5
+      }, (resp) => {
+        if ( resp.didCancel ) return 
+        if ( !resp.assets![0].uri ) return 
+        setTempUri( resp.assets![0].uri )
+        uploadImage( resp, _id)
+
+      });
+      
+  }
+  const takePhotoFromGallery = () => {
+    launchImageLibrary({
+      mediaType: 'photo',
+      quality: 0.5
+    }, (resp) => {
+      if ( resp.didCancel ) return 
+      if ( !resp.assets![0].uri ) return 
+      setTempUri( resp.assets![0].uri )
+      uploadImage( resp, _id)
+
+    });
+  }
   return (
     <View style={ styles.container}>
       <ScrollView>
@@ -70,6 +100,7 @@ const ProductScreen = ({ navigation, route}: Props) => {
         <Picker
           selectedValue={categoriaId}
           onValueChange={(itemValue ) => onChange(itemValue, 'categoriaId')}
+          style={{ color: 'black' }}
         >
           {
           categories.map( c => (
@@ -79,7 +110,6 @@ const ProductScreen = ({ navigation, route}: Props) => {
         </Picker>
         <Button
           title="Guardar" 
-          //TODO: Por hacer
           onPress={ saveOrUpdate }
           color="#5856D6"
         />
@@ -88,15 +118,13 @@ const ProductScreen = ({ navigation, route}: Props) => {
           <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
             <Button
               title="Cámara" 
-              //TODO: Por hacer
-              onPress={ ()=> {}}
+              onPress={ takePhoto }
               color="#5856D6"
             />
             <View style={{ width: 10 }}/>
             <Button
             title="Galería" 
-            //TODO: Por hacer
-            onPress={ ()=> {}}
+            onPress={ takePhotoFromGallery }
             color="#5856D6"
             />
           </View>
@@ -105,7 +133,7 @@ const ProductScreen = ({ navigation, route}: Props) => {
         
         {
           
-          img.length > 0 && (<Image 
+          img.length > 0 && !tempUri && (<Image 
             source={{ uri: img }}
             style={{
               marginTop: 20,
@@ -115,7 +143,19 @@ const ProductScreen = ({ navigation, route}: Props) => {
             />
           )
         }
-        {/* TODO: Mostrar imagen temporal */}
+        
+        {
+          
+          tempUri && (<Image 
+            source={{ uri: tempUri }}
+            style={{
+              marginTop: 20,
+              width: '100%',
+              height: 300
+            }}
+            />
+          )
+        }
         
       </ScrollView>
     </View>
@@ -132,7 +172,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 10
   },
   label: {
-    fontSize: 18
+    fontSize: 18,
+    color: 'black'
   },
   textInput: {
     borderWidth: 1,
@@ -142,6 +183,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0,0,0,0.2)',
     height: 45,
     marginTop: 5,
-    marginBottom: 15
+    marginBottom: 15,
+    color: 'black'
   }
 })
